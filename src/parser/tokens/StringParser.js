@@ -1,5 +1,5 @@
 const stringParser = e => {
-    if (e[0] == "'" && e[e.length - 1] == "'") {
+    if (e[0] == '"' && e[e.length - 1] == '"') {
         return true;
     } else {
         return false;
