@@ -1,5 +1,5 @@
-const compiler = async () => {
-
+const compiler = async arr => {
+    console.log(arr);
 }
 
 module.exports = compiler;
