@@ -1,3 +1,3 @@
-let version = "0.0.1";
+let version = "0.1.0";
 
 module.exports = version;
