@@ -1,4 +1,6 @@
+const compiler = require("../compiler/Compiler");
 const tokenParser = require("./tokens/TokenParser");
+const fs = require("fs");
 
 const parser = async out => {
     out = out.split("'")
@@ -31,9 +33,15 @@ const parser = async out => {
         return el != "" || null;
     });
 
-    out.forEach(async char => {
-        await console.log(tokenParser(char));
-    });
+    if (process.argv[2] == "--typeparser") {
+        out.forEach(async char => {
+            await console.log(tokenParser(char));
+        });
+    } else if (process.argv[2] == "--compiler") {
+        compiler(out);
+    } else {
+        compiler(fs.readFileSync(process.argv[2]).toString().split("\n"));
+    }
 }
 
 module.exports = parser;

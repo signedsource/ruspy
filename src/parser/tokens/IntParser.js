@@ -1,9 +1,5 @@
 const intParser = e => {
-    if (!isNaN(e) || !isNaN(parseFloat(e))) {
-        return true;
-    } else {
-        return false;
-    }
+    return (!isNaN(parseFloat(e)))
 }
 
 module.exports = intParser;
