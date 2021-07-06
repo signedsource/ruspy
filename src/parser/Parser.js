@@ -3,8 +3,21 @@ const tokenParser = require("./tokens/TokenParser");
 const parser = async out => {
     out = out.split("'")
 
+    var strObj = {};
+
+    out.forEach(char => {
+        if (char.startsWith('"') && char.endsWith('"')) {
+            strObj[out.indexOf(char)] = char;
+            out.splice(out.indexOf(char), 1);
+        }
+    });
+
     out = out.join(" ");
     out = out.split(" ");
+
+    Object.keys(strObj).forEach(key => {
+        out.splice(key, 0, strObj[key]);
+    });
 
     out.forEach((char, i) => {
         if (out.indexOf(out[i]) !== 0 || out.indexOf(out[i]) !== out.length) {
