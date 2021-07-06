@@ -1,16 +1,17 @@
 const readline = require('readline');
-const { version, welcome_message } = require('../compiler/config/Config');
+const config = require('../compiler/config/Config');
 const parser = require('../parser/Parser');
+const log = require("../functions/Log");
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-console.log(welcome_message);
+log(config.welcome_message);
 
 const ask = () => {
-    rl.question(`RusPy (${version})> `, out => {
+    rl.question(`RusPy (${config.version})> `, out => {
         parser(out);
         ask();
     });

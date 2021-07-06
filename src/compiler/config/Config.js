@@ -1,5 +1,6 @@
-let version = "0.1.0";
-let welcome_message = "Welcome to Ruspy\nType '.help' to view the avalibable commands"
+let config = {
+    version: "0.2.0",
+    welcome_message: "Welcome to Ruspy (.help for help)"
+}
 
-module.exports = version;
-module.exports = welcome_message;
+module.exports = config;
