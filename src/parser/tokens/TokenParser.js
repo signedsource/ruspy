@@ -11,7 +11,7 @@ const mathParser = require("./MathParser");
 const shellCommandsParser = require("./ShellCommandsParser");
 const stringParser = require("./StringParser");
 
-const tokenParser = e => {
+const tokenParser = async e => {
     if (stringParser(e)) {
         return StringType(e);
     } else if (intParser(e)) {

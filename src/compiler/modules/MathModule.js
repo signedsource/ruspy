@@ -1,10 +1,26 @@
 const mathModule = async e => {
-    let plusindex = e.indexOf("+");
+    var num = 0;
 
-    let f1 = Number(e[plusindex - 1]);
-    let f2 = Number(e[plusindex + 1]);
+    for (let i = 0; i < e.length; i++) {
+        let plusindex = e.indexOf("+");
 
-    console.log(f1 + f2);
+        let f1 = e[plusindex - 1];
+        let f2 = e[plusindex + 1];
+        let f3 = e[plusindex + 2];
+
+        num = num + Number(f1);
+        num = num + Number(f2);
+
+        e.splice(plusindex, 1);
+        e.splice(e.indexOf(f1), 1);
+        e.splice(e.indexOf(f2), 1);
+        e.splice(e.indexOf(f3), 1);
+
+        i++;
+    }
+
+
+    console.log(num);
     return true;
 }
 

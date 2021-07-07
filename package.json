@@ -1,0 +1,28 @@
+{
+  "name": "ruspy",
+  "version": "0.3.0-ALPHA",
+  "description": "The Ruspy programming language. Based on Rust & Python",
+  "main": "src/shell/ruspy",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skimbledevs/ruspy.git"
+  },
+  "keywords": [
+    "nodejs",
+    "language",
+    "programming",
+    "ruspy"
+  ],
+  "author": "Skimble Devs",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/skimbledevs/ruspy/issues"
+  },
+  "homepage": "https://github.com/skimbledevs/ruspy#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
