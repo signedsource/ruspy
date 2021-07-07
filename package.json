@@ -4,7 +4,7 @@
   "description": "The Ruspy programming language. Based on Rust & Python",
   "main": "src/shell/ruspy",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "shell": "node src/shell/ruspy"
   },
   "repository": {
     "type": "git",

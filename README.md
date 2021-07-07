@@ -1,4 +1,5 @@
 # ruspy
-A new programming language, based on JS
+The Ruspy programming language. Based on Rust & Python
 
-The String sintax is like this: '"your string"'
+# Running
+To run the basic shell, execute `npm shell`, and it will run
