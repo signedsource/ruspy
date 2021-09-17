@@ -6,6 +6,7 @@ const compiler = require('../compiler/Compiler');
 const fs = require("fs");
 
 log(config.welcome_message);
+log("idk")
 
 const ask = async () => {
 	let out;
