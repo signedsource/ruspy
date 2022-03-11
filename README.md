@@ -1,5 +1,3 @@
-# ruspy
-The Ruspy programming language. Based on Rust & Python
-
-# Running
-To run the basic shell, execute `npm shell`, and it will run
+# Ruspy
+Main-focus language, which is based on Python, but with a few additional features taken from Rust.
+---
