@@ -99,10 +99,9 @@ export default class Lexer {
 	parse() {
 		readFileSync(this.file).toString().split("").forEach((char, index) => {
 			this.unparsed += char;
+			// console.log(char, index, this.opts.insideOfMacro);
 			// console.log(`Current char: ${char}\nCurrent unparsed: ${this.unparsed}\nCurrent parsed: ${this.parsed.map(component => component.token).join("")}\nCurrent opts: ${JSON.stringify(this.opts)}`);
-			console.log(char, index, this.unparsed);
-
-
+			
 			switch (char) {
 				case "-":
 					if (!this.getActiveOpt("insideOfComment")) {
@@ -121,18 +120,6 @@ export default class Lexer {
 					}
 
 					break;
-				/** case "print":
-					if (!this.getActiveOpt("insideOfComment")) {
-						if (this.getActiveOpt("insideOfString")) {
-
-						} else {
-							if (this.getActiveOpt("insideOfMacro")) {
-								throw new Error("Cannot use a reserved word inside of a macro")
-							}
-						}
-					}
-					
-					break; */
 				case "#":
 					if (!this.getActiveOpt("insideOfComment")) {
 						if (this.getActiveOpt("insideOfString")) {
@@ -142,6 +129,10 @@ export default class Lexer {
 							this.stringBuffer.end = index + 1;
 						} else {
 							this.opts.insideOfMacro.active.macro = true;
+							this.opts.insideOfMacro.children.start == 0 ? this.opts.insideOfMacro.children.start = index + 1 : this.opts.insideOfMacro.children.start;
+							this.opts.insideOfMacro.children.end = index + 1;
+							this.unparsed = this.unparsed.slice(0, -1);
+							this.parsed.push({ token: Tokens.T_MACRO, start: index, end: index + 1});
 						}
 					}
 
@@ -157,6 +148,7 @@ export default class Lexer {
 							if (this.opts.insideOfMacro.active.macro) this.opts.insideOfMacro.active.name = true;
 							else this.registerOpt("insideOfBrackets", index, index + 1);
 
+							this.unparsed = this.unparsed.slice(0, -1);
 							this.parsed.push({ token: Tokens.T_LBRACKET, start: index, end: index + 1 });
 						}
 					}
@@ -173,6 +165,7 @@ export default class Lexer {
 							if (this.opts.insideOfMacro.active.macro) this.opts.insideOfMacro.active.args = true;
 							else this.registerOpt("insideOfParenthesis", index, index + 1);
 
+							this.unparsed = this.unparsed.slice(0, -1);
 							this.parsed.push({ token: Tokens.T_LPAREN, start: index, end: index + 1 });
 						}
 					}
@@ -190,6 +183,11 @@ export default class Lexer {
 								if (this.opts.insideOfMacro.active.name) {
 									if (this.opts.insideOfMacro.active.args) {
 										this.parsed.push({ token: this.macroBuffer.string, start: this.macroBuffer.start, end: this.macroBuffer.end });
+										this.macroBuffer = {
+											string: "",
+											start: 0,
+											end: 0
+										}
 									} else {
 										throw new Error("Macros must have arguments provided")
 									}
@@ -197,9 +195,10 @@ export default class Lexer {
 									throw new Error("The specified macro hasn't been given a name reference");
 								}
 							} else {
-								this.removeOpt("insideOfParenthesis");
+								this.removeOpt("insideOfParenthesis");	
 							}
 
+							this.unparsed = this.unparsed.slice(0, -1);
 							this.parsed.push({ token: Tokens.T_RPAREN, start: index, end: index + 1 });
 						}
 					}
@@ -219,6 +218,7 @@ export default class Lexer {
 										this.opts.insideOfMacro.active.name = false;
 										this.opts.insideOfMacro.active.macro = false;
 										this.opts.insideOfMacro.active.arguments = false;
+										this.opts.insideOfMacro.children.end = index + 1;
 										this.parsed.push({ token: Tokens.T_RBRACKET, start: index, end: index + 1 });
 									} else {
 										throw new Error("Macros must have arguments provided")
@@ -254,16 +254,40 @@ export default class Lexer {
 							this.stringBuffer.start == 0 ? this.stringBuffer.start = index : this.stringBuffer.start;
 							this.stringBuffer.end = index + 1;
 						} else if (this.opts.insideOfMacro.active.macro) {
-							/** if (this.unparsed === "main") {
-								this.parsed.push({ token: this.unparsed, start: index - this.unparsed.length + 1, end: index + 1 });
-								this.unparsed = this.unparsed.slice(0, -1);
-							} else if (this.unparsed === "compile") {
-								this.parsed.push({ token: this.unparsed, start: index - this.unparsed.length + 1, end: index + 1 });
-								this.unparsed = this.unparsed.slice(0, -1);
-							} */
+							if (this.unparsed === "main") {
+								if (this.opts.insideOfMacro.active.args) {
+									
+								} else {
+									this.parsed.push({ token: this.unparsed, start: index - this.unparsed.length + 1, end: index + 1 });
+									this.unparsed = "";
 
-							this.parsed.push({ token: this.unparsed, start: index - this.unparsed.length + 1, end: index + 1 });
-							this.unparsed = "";
+									this.macroBuffer = {
+										string: "",
+										start: 0,
+										end: 0
+									}
+								}
+							} else if (this.unparsed === "compile") {
+								if (this.opts.insideOfMacro.active.args) {
+									this.unparsed += char;
+								} else {
+									this.parsed.push({ token: this.unparsed, start: index - this.unparsed.length + 1, end: index + 1 });
+									this.unparsed = "";
+
+									this.macroBuffer = {
+										string: "",
+										start: 0,
+										end: 0
+									}
+								}
+							} else {
+								if (this.opts.insideOfMacro.active.args) {
+									this.unparsed = this.unparsed.slice(0, -1);
+									this.macroBuffer.string += char;
+									this.macroBuffer.start == 0 ? this.macroBuffer.start = index : this.macroBuffer.start;
+									this.macroBuffer.end = index + 1;
+								}
+							}
 						} else {
 							if (char === " ") {
 								if (!this.getActiveOpt("insideOfString")) this.unparsed = this.unparsed.slice(0, -1);

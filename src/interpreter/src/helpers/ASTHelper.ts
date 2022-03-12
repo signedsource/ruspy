@@ -36,6 +36,8 @@ export default class ASTHelper {
     }
 
     addDeclaration(name: Tokens | string, type: Types, start: number, end: number) {
+        if (name == "") console.log("name is empty");
+
         this.ast.body.declarations.push({
             name, type, start, end
         });
