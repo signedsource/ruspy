@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/ruspy.js --file tests/11-03-2022/test-ast.rsp",
+    "test": "tsc && node dist/ruspy.js --file tests/11-03-2022/macros.test.rsp",
     "build": "tsc"
   },
   "dependencies": {
