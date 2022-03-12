@@ -1,14 +1,14 @@
 export enum Tokens {
-    T_COMMENT = "#",
+    T_COMMENT = "-",
+    T_MACRO = "#",
     T_PRINT = "print",
-    T_MAIN = "main",
-    T_COMPILE = "compile",
     T_LPAREN = "(",
     T_RPAREN = ")",
-    T_DOLAR = "$",
     T_LBRACKET = "[",
     T_RBRACKET = "]",
-    T_NUMBER_0 = "0",
+    T_MAIN = "main",
+    T_COMPILE = "compile",
+    /** T_NUMBER_0 = "0",
     T_NUMBER_1 = "1",
     T_NUMBER_2 = "2",
     T_NUMBER_3 = "3",
@@ -18,7 +18,7 @@ export enum Tokens {
     T_NUMBER_7 = "7",
     T_NUMBER_8 = "8",
     T_NUMBER_9 = "9",
-    T_LITERAL = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    T_LITERAL = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", */
     T_QUOTATION_MARK = '"'
     // T_SYMBOLS = "~!@%^&_+{}|:\"<>?`-=\\;',./",
 }

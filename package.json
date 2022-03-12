@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/ruspy.js --file tests/11-03-2022/test-ast.rsp"
+    "start": "tsc && node dist/ruspy.js --file tests/11-03-2022/test-ast.rsp",
+    "build": "tsc"
   },
   "dependencies": {
     "colorette": "^2.0.16",

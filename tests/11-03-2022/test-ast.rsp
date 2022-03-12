@@ -1,4 +1,1 @@
-$[main()]
-$[compile()]
-
-print("hey!")
+#[main(huevo)]
